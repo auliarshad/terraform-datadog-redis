@@ -260,3 +260,27 @@ resource "datadog_timeboard" "redis" {
     }
   }
 }
+
+module "monitor_free_memory" {
+  source  = "github.com/traveloka/terraform-datadog-monitor"
+  enabled = "${local.monitor_enabled}"
+
+  product_domain = "${var.product_domain}"
+  service        = "${var.service}"
+  environment    = "${var.environment}"
+  tags           = "${var.tags}"
+  timeboard_id   = "${join(",", datadog_timeboard.redis.*.id)}"
+
+  name               = "${var.product_domain} - ${var.redis_name} - ${var.environment} - Free Memory is Low"
+  query              = "sum(last_5m):avg:aws.elasticache.freeable_memory{name:${var.redis_name}} by {cacheclusterid,accountname}"
+  thresholds         = "${var.free_mem_thresholds}"
+  message            = "${var.free_mem_message}"
+  escalation_message = "${var.free_mem_escalation_message}"
+
+  recipients         = "${var.recipients}"
+  alert_recipients   = "${var.alert_recipients}"
+  warning_recipients = "${var.warning_recipients}"
+
+  renotify_interval = "${var.renotify_interval}"
+  notify_audit      = "${var.notify_audit}"
+}

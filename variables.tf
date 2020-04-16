@@ -60,3 +60,25 @@ variable "notify_audit" {
   default     = false
   description = "Whether any configuration changes should be notified"
 }
+
+variable "redis_name" {
+  type        = "string"
+  description = "The name of the Redis"
+}
+
+variable "free_mem_thresholds" {
+  type = "map"
+  description = "The warning and critical thresholds for Free Memory Monitoring"
+}
+
+variable "free_mem_message" {
+  type        = "string"
+  default     = "Monitor is triggered"
+  description = "The message when Free Memory Monitor triggered"
+}
+
+variable "free_mem_escalation_message" {
+  type        = "string"
+  default     = "Monitor isn't resolved for given interval"
+  description = "The escalation message when Free Memory Monitor isn't resolved for given time"
+}
