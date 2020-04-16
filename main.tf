@@ -271,8 +271,8 @@ module "monitor_free_memory" {
   tags           = "${var.tags}"
   timeboard_id   = "${join(",", datadog_timeboard.redis.*.id)}"
 
-  name               = "${var.product_domain} - ${var.redis_name} - ${var.environment} - Free Memory is Low"
-  query              = "sum(last_5m):avg:aws.elasticache.freeable_memory{name:${var.redis_name}} by {cacheclusterid,accountname}"
+  name               = "${var.product_domain} - ${var.cluster} - ${var.environment} - Free Memory is Low"
+  query              = "sum(last_5m):avg:aws.elasticache.freeable_memory{name:${var.cluster}} by {cacheclusterid,accountname}"
   thresholds         = "${var.free_mem_thresholds}"
   message            = "${var.free_mem_message}"
   escalation_message = "${var.free_mem_escalation_message}"

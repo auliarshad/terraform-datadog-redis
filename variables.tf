@@ -61,11 +61,6 @@ variable "notify_audit" {
   description = "Whether any configuration changes should be notified"
 }
 
-variable "redis_name" {
-  type        = "string"
-  description = "The name of the Redis"
-}
-
 variable "free_mem_thresholds" {
   type = "map"
   description = "The warning and critical thresholds for Free Memory Monitoring"
